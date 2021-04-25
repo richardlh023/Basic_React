@@ -127,7 +127,7 @@ function Register() {
                         type='text'
                         placeholder='firstname'
                     />
-                    {errors?.email?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ ชื่อ</p>}
+                    {errors?.firstname?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ ชื่อ</p>}
                 </div>
 
                 <div className="form-floating">
@@ -139,7 +139,7 @@ function Register() {
                         type='text'
                         placeholder='lastname'
                     />
-                    {errors?.email?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ นามสกุล</p>}
+                    {errors?.lastname?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ นามสกุล</p>}
                     <br></br>
                 </div>
 
