@@ -55,8 +55,6 @@ const AlertLogin = (props) => {
 function Login() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
-    const [rememberMe, setRememberMe] = useState(false)
-
     const [checkLogin, setCheckLogin] = useState({
         isSuccess: false,
         error: '',
@@ -71,11 +69,10 @@ function Login() {
             setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
         }
         reset()
+
+        console.log(data)
     }
 
-    const handleRememberMe = () => {
-        setRememberMe(!rememberMe)
-    }
 
     // console.log('set props & set state');
 
@@ -124,19 +121,30 @@ function Login() {
                     {errors?.password?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ password</p>}
                 </div>
 
-                <div className="checkbox mb-3">
-                    <Form.Group controlId="formBasicCheckbox" style={{
-                        textAlign: 'center'
-                    }}>
-                        <Form.Check
-                            type="checkbox"
-                            label="Remember me"
-                            checked={rememberMe}
-                            onClick={handleRememberMe}
-                        />
-                    </Form.Group>
-                    {/* <input type="checkbox" value="remember-me"> Remember me */}
+                <div className="form-floating">
+                    <Form.Label>Firstname</Form.Label>
+                    <Form.Control
+                        {...register('firstname', {
+                            required: true,
+                        })}
+                        type='text'
+                        placeholder='firstname'
+                    />
+                    {errors?.email?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ ชื่อ</p>}
                 </div>
+
+                <div className="form-floating">
+                    <Form.Label>Lastname</Form.Label>
+                    <Form.Control
+                        {...register('lastname', {
+                            required: true,
+                        })}
+                        type='text'
+                        placeholder='lastname'
+                    />
+                    {errors?.email?.type === 'required' && <p style={{ color: 'red' }}>กรุณาระบุ นามสกุล</p>}
+                </div>
+
                 <Button type='submit' variant='primary' block>Sign in</Button>
                 <p className="mt-5 mb-3 text-muted" style={{ textAlign: 'center' }}>© 2017–2021</p>
             </Form>
