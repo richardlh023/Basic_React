@@ -1,50 +1,52 @@
 import React, { useEffect, useState } from 'react'
 import NoAuth from '../layout/NoAuth'
-import { Form, Button, Alert } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import * as api from '../api/auth'
+import { useHistory } from 'react-router'
 
-const login = {
-    email: 'test@test.com',
-    password: '123456'
-}
+// const login = {
+//     email: 'test@test.com',
+//     password: '123456'
+// }
 
-const AlertLogin = (props) => {
+// const AlertLogin = (props) => {
 
-    useEffect(() => {
-        console.log('mounting');
-        return () => {
-            console.log('unmounting');
-        }
-    }, [])
+//     useEffect(() => {
+//         console.log('mounting');
+//         return () => {
+//             console.log('unmounting');
+//         }
+//     }, [])
 
-    if (props.isLogin) {
-        return (<Alert variant='success'>
-            Login Success
-        </Alert>)
-    }
+//     if (props.isLogin) {
+//         return (<Alert variant='success'>
+//             Login Success
+//         </Alert>)
+//     }
 
-    // const a;
+//     // const a;
 
-    // a === null
-    // null => false
-    // undefined
+//     // a === null
+//     // null => false
+//     // undefined
 
-    // a !== null & a !== undefind
-    // 0 => false
-    // '' => false
-    // false => false
+//     // a !== null & a !== undefind
+//     // 0 => false
+//     // '' => false
+//     // false => false
 
-    // a มีค่าข้างในตัวแปรที่ไม่ใช่ null,0,'',false
+//     // a มีค่าข้างในตัวแปรที่ไม่ใช่ null,0,'',false
 
 
-    if (!props.isLogin && props.error) {
-        return (<Alert variant='danger'>
-            {props.error}
-        </Alert>)
-    }
+//     if (!props.isLogin && props.error) {
+//         return (<Alert variant='danger'>
+//             {props.error}
+//         </Alert>)
+//     }
 
-    return (<></>)
-}
+//     return (<></>)
+// }
 // let anonyUseEffect
 
 // Login()
@@ -55,22 +57,32 @@ const AlertLogin = (props) => {
 function Login() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
+    const history = useHistory()
+
     const [rememberMe, setRememberMe] = useState(false)
 
-    const [checkLogin, setCheckLogin] = useState({
-        isSuccess: false,
-        error: '',
-    })
+    // const [checkLogin, setCheckLogin] = useState({
+    //     isSuccess: false,
+    //     error: '',
+    // })
 
     console.log(errors)
 
     const onSubmit = (data) => {
-        if (data.email === login.email && login.password === data.password) {
-            setCheckLogin({ isSuccess: true, error: '' })
-        } else {
-            setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
-        }
-        reset()
+        // if (data.email === login.email && login.password === data.password) {
+        //     setCheckLogin({ isSuccess: true, error: '' })
+        // } else {
+        //     setCheckLogin({ isSuccess: false, error: 'Login Fail.' })
+        // }
+        // reset()
+        console.log(data)
+
+        api.login(data.email, data.password).then(res => {
+            reset()
+            history.push('/')
+        }).catch(err => {
+            console.error(err)
+        })
     }
 
     const handleRememberMe = () => {
@@ -98,7 +110,7 @@ function Login() {
             >
                 <h1 className="h3 mb-3 fw-normal" style={{ textAlign: 'center' }}>Please sign in</h1>
                 {/** เช็คเงื่อนไข การแสดงผล */}
-                <AlertLogin isLogin={checkLogin.isSuccess} error={checkLogin.error} />
+                {/* <AlertLogin isLogin={checkLogin.isSuccess} error={checkLogin.error} /> */}
 
 
                 <div className="form-floating">
@@ -132,7 +144,7 @@ function Login() {
                             type="checkbox"
                             label="Remember me"
                             checked={rememberMe}
-                            onClick={handleRememberMe}
+                            onChange={handleRememberMe}
                         />
                     </Form.Group>
                     {/* <input type="checkbox" value="remember-me"> Remember me */}
